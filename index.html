@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+              <!--Vélo en Ville--><img src="images/logo2.png" id="logo" />
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <main id="main">
+      <!--Part of the geolocation functionality that is no longer in use-->
+    <!--<div id="geolocation-error-form-container" class="display-none row">
+      <form id="geolocation-error-form">
+        <div class="form-group">
+          <div class="row">
+            <label for="citiesList" class="col-sm-12 control-label">Nous n'avons pas pu vous localiser. Pour pouvoir utiliser l'application, veuillez choisir l'une des villes ci-dessous :</label>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <select class="form-control" name="citiesList" id="citiesList">
+                <option value="" selected>-Aucune-</option>
+                <option value="brisbane">Brisbane (AU)</option>
+                <option value="bruxelles">Bruxelles (BE)</option>
+                <option value="namur">Namur (BE)</option>
+                <option value="santander">Santander (ES)</option>
+                <option value="amiens">Amiens (FR)</option>
+                <option value="cergy-pontoise">Cergy-Pontoise (FR)</option>
+                <option value="creteil">Créteil (FR)</option>
+                <option value="lyon">Lyon (FR)</option>
+                <option value="marseille">Marseille (FR)</option>
+                <option value="mulhouse">Mulhouse (FR)</option>
+                <option value="nancy">Nancy (FR)</option>
+                <option value="nantes">Nantes (FR)</option>
+                <option value="rouen">Rouen (FR)</option>
+                <option value="toulouse">Toulouse (FR)</option>
+                <option value="dublin">Dublin (IE)</option>
+                <option value="toyama">Toyama (JP)</option>
+                <option value="vilnius">Vilnius (LT)</option>
+                <option value="luxembourg">Luxembourg (LU)</option>
+                <option value="lillestrom">Lillestrom (NO)</option>
+                <option value="besancon">Besançon (FR)</option>
+                <option value="seville">Séville (ES)</option>
+                <option value="valence">Valence (ES)</option>
+                <option value="lund">Lund (SE)</option>
+                <option value="stockholm">Stockholm (SE)</option>
+                <option value="ljubljana">Ljubljana (SI)</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-2">
+              <button type="submit" id="choose-city" class="btn btn-default" name="choose-city" value="choose">Choisir</button>
+            </div>
+            <div class="col-sm-2">
+              <button type="button" id="cancel-city-choice" class="btn btn-default" name="cancel-city-choice" value="cancel">Annuler</button>
+            </div>
+            <div class="col-sm-4"></div>
+          </div>
+        </div>
+      </form>
+    </div>-->
+
+    <section id="slideshow-container" class="row panel panel-default"> 
+
+      <div id="slideshow" class="panel-content">
+      
+        <div id="slides-container">
+
+            <div id="slide1" class="slide showing"></div>
+            <div id="slide2" class="slide"></div>
+            <div id="slide3" class="slide"></div>
+            <div id="slide4" class="slide"></div>
+
+        </div>
+      </div>
+
+      <div id="slide-navigation" class="row panel-footer">
+          <ul id="slide-nav" class="pagination">
+            <li>
+              <a href="#" id="previous">
+                <i class="glyphicon glyphicon-backward"></i>
+              </a>
+            </li>
+            <li>
+              <a href="" id="playback">
+                <i id="pause" class="glyphicon glyphicon-pause"></i>
+                <i id="play" class=" display-none glyphicon glyphicon-play"></i>
+              </a>
+            </li>
+            <li>
+              <a href="#" id="next">
+                <i class="glyphicon glyphicon-forward"></i>
+              </a>
+            </li>
+          </ul>
+      </div>
+
+    </section>
+    <section>
+      <div id="reservation-container" class="row">
+        <div id="map-container" class="col-sm-12">
+          <div id="map"></div>
+          <div id="timer-container" class="display-none row">
+            <div id="timer"></div>
+          </div> 
+        </div>
+        
+        <div id="form-container" class="col-sm-6 col-lg-4 display-none">
+          <div class="row">
+            <form id="form" class="col-sm-12">
+              <fieldset class="form-group">
+                <legend>Détails de la station</legend>
+                <div id="station-reservation-message" class="display-none row">
+                  <div class="form-group">
+                    <div id="bike-booked" class="col-sm-12">
+                      Réservation en cours dans cette station.
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <span id="station-status">
+                        <span id="station-open" class="display-none">Ouverte</span>
+                        <span id="station-closed" class="display-none">Fermée</span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-4">Adresse : </div>
+                  <div id="address-container" class="col-sm-8">
+                    <span id="station-address"></span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <span id="placesNumber"></span><span id="places"> places</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group">
+                    <div class="col-sm-12">
+                      <span id="availableBikesNumber"></span><span id="availableBikes"> vélos disponibles</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group">
+                    <label for="firstName" class="col-sm-4 control-label">Prénom : </label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" name="firstName" id="firstName" required />
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group">
+                    <label for="lastName" class="col-sm-4 control-label">Nom : </label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" name="lastName" id="lastName" required />
+                    </div>
+                  </div>
+                </div>
+                <div id="form-button" class="form-group row">
+                  <div  class="col-xs-4"></div>
+                  <div  class="col-xs-4">
+                    <button type="button" id="book" class="btn btn-default pull-right" name="send">Réserver</button>
+                  </div>
+                  <div  class="col-xs-4"></div>
+                </div>
+                <div id="canvas-container" class="display-none row">
+                  <span>Signature 
+                    <i class="glyphicon glyphicon-pencil"></i>
+                  </span>
+                  <canvas id="canvas" width="300" height="80">
+                    <span>Signature</span>
+                  </canvas>
+                  <div>
+                    <button type="submit" id="submit-canvas" class="btn btn-default pull-right" disabled>Valider</button>
+                    <button type="button" id="cancel-canvas" class="btn btn-default pull-right">Annuler</button>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section> 
+    <footer id="footer">
+      © 2020 VÉLO EN VILLE
+    </footer>
+  </main>
+  <script src="js/slideshow.js"></script>
+    <script src="js/main.js">
+    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCiP9sMr4ryjhk0dVxz1C0HwkpnV3xzAZU&callback=initMap">
+    </script> 
+  </body>
+</html>
